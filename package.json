@@ -1,0 +1,37 @@
+{
+  "name": "setPrinting",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "vue-cli-service serve --open",
+    "build": "vue-cli-service build --mode development",
+    "build:prod": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "core-js": "^3.6.4",
+    "js-cookie": "^2.2.1",
+    "lib-flexible": "^0.3.2",
+    "md5": "^2.2.1",
+    "mint-ui": "^2.2.13",
+    "nprogress": "^0.2.0",
+    "postcss-px2rem": "^0.3.0",
+    "vant": "^2.8.7",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.5",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-plugin-vuex": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "babel-plugin-component": "^1.1.1",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "script-ext-html-webpack-plugin": "^2.1.4",
+    "vconsole": "^3.3.4",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
