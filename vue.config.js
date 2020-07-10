@@ -86,12 +86,8 @@ module.exports = {
           )
       },
     devServer:{
-        proxy:{
-            '/api':{
-                target:'http://10.101.3.4:8087',
-                changeOringin:true
-            }
-        }
+      open: true,
+      port: 8066
     }
 
 }
