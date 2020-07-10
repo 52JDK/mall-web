@@ -31,7 +31,6 @@ export default {
       getSwiperList(){
           const type = 1;
           swiperList(type).then(res=>{
-            console.log(res,"zzzzzzzzzzzzzzzzzzzz")
             this.whellList = res.data;
                 let that = this;
                 let image = res.data[0];

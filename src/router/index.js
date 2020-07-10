@@ -67,6 +67,15 @@ const routes = [
       layout:true,
       title:'我的'
     }
+  },
+   {
+    path: '/goods/detail',
+    name: 'detail',
+    component: () => import('../views/goods/detail.vue'),
+    meta:{
+      layout:false,
+      title:'商品详情'
+    }
   }
 ]
 

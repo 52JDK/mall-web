@@ -28,5 +28,8 @@
 </script>
 
 <style>
-
+    .van-nav-bar{
+        height:46px !important; 
+        line-height: 46px !important;
+    }
 </style>
