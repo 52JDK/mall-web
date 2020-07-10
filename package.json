@@ -9,6 +9,7 @@
     "build:prod": "vue-cli-service build"
   },
   "dependencies": {
+    "Vant": "latest",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "js-cookie": "^2.2.1",
@@ -17,7 +18,7 @@
     "mint-ui": "^2.2.13",
     "nprogress": "^0.2.0",
     "postcss-px2rem": "^0.3.0",
-    "vant": "^2.8.7",
+    "vant": "^2.9.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
