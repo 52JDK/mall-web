@@ -3,7 +3,7 @@ const service = axios.create({
     baseURL:'http://www.52jdk.com:8079',
     timeout:50000
 })
-import { Toast  } from "Vant"
+import { Toast  } from "vant"
 // request 拦截器
 service.interceptors.request.use(
     config => {
