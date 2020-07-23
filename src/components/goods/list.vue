@@ -54,7 +54,7 @@
 </template>
 
 <script>
-    import { goodsList } from "../../api/goods"
+    import { goodsListApi } from "../../api/goods"
     export default {
         name: 'goods',
         data() {
@@ -103,7 +103,7 @@
                     pageSize,
                     pageNum
                 }
-                goodsList(params).then(res=>{
+                goodsListApi(params).then(res=>{
                    if(res.code=='0000'){
                         this.vantLoading = false;
                         let goodsList = this.goodsList||[];

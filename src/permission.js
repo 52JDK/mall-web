@@ -11,6 +11,7 @@ const whiteList = ['/login', '/login/psd'] // no redirect whitelist
 
 router.beforeEach(async(to,from, next)=>{
     NProgress.start()
+    window.scrollTo(0,0)
     next()
     // const hasToken = getToken()
     // if(hasToken){
