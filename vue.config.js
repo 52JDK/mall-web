@@ -32,7 +32,7 @@ module.exports = {
     chainWebpack(config) {
         config.plugins.delete('preload') // TODO: need test
         config.plugins.delete('prefetch') // TODO: need test
-    
+
         // set svg-sprite-loader
         config.module
           .rule('svg')
@@ -49,7 +49,7 @@ module.exports = {
             symbolId: 'icon-[name]'
           })
           .end()
-    
+
         // set preserveWhitespace
         config.module
           .rule('vue')
@@ -60,12 +60,12 @@ module.exports = {
             return options
           })
           .end()
-    
+
         config
           .when(process.env.NODE_ENV === 'development',
             config => config.devtool('cheap-source-map')
           )
-    
+
         config
           .when(!0,
             config => {
@@ -87,7 +87,8 @@ module.exports = {
       },
     devServer:{
       open: true,
-      port: 8066
+      port: 8066,
+      disableHostCheck: true,
     }
 
 }
