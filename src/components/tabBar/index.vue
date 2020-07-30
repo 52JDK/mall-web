@@ -1,16 +1,19 @@
 <template>
-    <div class="tabberWarp">
-      <div class="warp">
-        <Item :txt='item.txt' :page='item.page' @change='getVal' v-for='item in tabbarList' :sel='selected' v-bind:key="item.txt">
-  
-          <img :src="item.normalImg" slot='normalImg'>
-          <img :src="item.activeImg" slot='activeImg'>
-        </Item>
-      </div>
-    </div>
+  <van-tabbar v-model="active"   active-color="red" placeholder  fixed route >
+    <van-tabbar-item  icon="shop-o"  to="/home" >首页</van-tabbar-item>
+    <van-tabbar-item icon="apps-o">分类</van-tabbar-item>
+    <van-tabbar-item to="/cart" icon="shopping-cart-o">购物车</van-tabbar-item>
+    <van-tabbar-item icon="friends-o">我</van-tabbar-item>
+  </van-tabbar>
   </template>
   <script type="text/javascript">
+    import Vue from 'vue';
+    import { Tabbar, TabbarItem } from 'vant';
+
+    Vue.use(Tabbar);
+    Vue.use(TabbarItem);
   import Item from './item.vue'
+    import { Notify } from 'vant';
   export default {
     components: {
       Item
@@ -19,12 +22,14 @@
       return {
         // 默认展示哪一个菜单
         selected: '',
+        active: 0,
+
         tabbarList: [{
           txt: '首页',
           page: '',
           normalImg: require('../../assets/images/home.png'),
           activeImg: require('../../assets/images/home-on.png')
-  
+
         },
         {
           txt: '分类',
@@ -48,9 +53,12 @@
       }
     },
     methods: {
-      getVal: function (res) {
-        this.selected = res
-      }
+      // onChange(index) {
+      //   Notify({ type: 'primary', message: index });
+      // },
+      // getVal: function (res) {
+      //   this.selected = res
+      // }
     }
   }
   </script>
@@ -64,18 +72,18 @@
       justify-content: space-around;
       font-size: 0;
     }
-  
+
     .warp img {
       width: 20px;
       height: 20px;
     }
-  
+
     .tabberWarp img {
       margin-top: 10px;
       margin-bottom: 5px;
-  
+
     }
-  
+
     .tabberWarp {
       position: fixed;
       bottom: 0;

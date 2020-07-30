@@ -52,10 +52,10 @@
     </div>
     <van-goods-action>
       <van-goods-action-icon icon="shop-o" text="首页" dot />
-      <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
-      <van-goods-action-icon icon="star" text="收藏" badge="12" />
-      <van-goods-action-button type="warning" text="加入购物车" />
-      <van-goods-action-button type="danger" text="立即购买" />
+      <van-goods-action-icon icon="cart-o" text="购物车" to="/cart" />
+      <van-goods-action-icon icon="star" text="收藏" badge="0" />
+      <van-goods-action-button type="warning" text="加入购物车" @click="showBaseFun"/>
+      <van-goods-action-button type="danger" text="立即购买" @click="showBaseFun"/>
     </van-goods-action>
     <van-sku
       v-model="showBase"
@@ -66,15 +66,21 @@
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked"
     />
+
   </div>
 </template>
 <script>
 import { goodsDetail, goodsRule } from "../../api/goods";
+import {addCart} from "../../api/cart";
+
 export default {
   data() {
     return {
       productId: "",
-      goodsDetail: {},
+      goodsDetail: {
+        pictureUrl:"",
+        marketPrice:""
+      },
       showBase: false,
       sku: {
         // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
@@ -178,6 +184,7 @@ export default {
       });
     },
     showBaseFun() {
+      // getVal();
       this.showBase = true;
     },
     onBuyClicked(data) {
@@ -186,6 +193,10 @@ export default {
     },
 
     onAddCartClicked(data) {
+      let {} = this;
+      addCart(data).then(res =>{
+        console.log(res)
+      });
       console.log(data, "onAddCartClicked");
       this.showBase = false;
     },
