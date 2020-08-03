@@ -20,6 +20,7 @@
     "vant": "^2.8.7",
     "vue": "^2.6.11",
     "vue-amap": "^0.5.10",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },
@@ -31,8 +32,11 @@
     "babel-plugin-component": "^1.1.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
+    "sass-loader": "^9.0.2",
     "script-ext-html-webpack-plugin": "^2.1.4",
+    "swiper": "^6.1.1",
     "vconsole": "^3.3.4",
     "vue-template-compiler": "^2.6.11"
   }

@@ -8,6 +8,10 @@ import vConsole from 'vconsole'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import './permission' // permission control
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
+Vue.use(VueAwesomeSwiper)
+
 Vue.use(Vant);
 
 

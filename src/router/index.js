@@ -20,6 +20,7 @@ const routes = [
     component: () => import('../views/Home'),
     meta:{
       layout:true,
+      head:true,
       title:'首页'
     }
   },
@@ -29,6 +30,7 @@ const routes = [
     component: () => import('../views/login/psdLogin.vue'),
     meta:{
       layout:false,
+      head:true,
       title:'密码登录'
     }
   },
@@ -38,6 +40,7 @@ const routes = [
     component: () => import('../views/login/index'),
     meta:{
       layout:false,
+      head:true,
       title:'登录'
     }
   },
@@ -47,6 +50,7 @@ const routes = [
     component: () => import('../views/category/index'),
     meta:{
       layout:true,
+      head:true,
       title:'分类'
     }
   },
@@ -55,7 +59,8 @@ const routes = [
     name: 'cart',
     component: () => import('../views/cart/index'),
     meta:{
-      layout:true,
+      layout:false,
+      head:true,
       title:'购物车'
     }
   },
@@ -65,6 +70,7 @@ const routes = [
     component: () => import('../views/user/index'),
     meta:{
       layout:true,
+      head:true,
       title:'我的'
     }
   },
@@ -74,9 +80,20 @@ const routes = [
     component: () => import('../views/goods/detail.vue'),
     meta:{
       layout:false,
+      head:true,
       title:'商品详情'
     }
-  }
+  },
+  {
+    path: '/order/createOrder',
+    name: 'detail',
+    component: () => import('../views/order/createOrder'),
+    meta:{
+      layout:false,
+      head:true,
+      title:'创建订单'
+    }
+  },
 ]
 
 const router = new VueRouter({

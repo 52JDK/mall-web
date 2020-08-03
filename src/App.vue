@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="header-nav">
+        <div class="header-nav" v-if="$route.meta.head">
             <headerNav :title="$route.meta.title"/>
         </div>
         <router-view v-if="isRouterAlive"/>
@@ -48,6 +48,7 @@
     .header-nav {
         width: 100%;
         height: 46px;
+
     }
 </style>
 

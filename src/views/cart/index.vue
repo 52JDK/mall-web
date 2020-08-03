@@ -17,7 +17,7 @@
                                 <van-stepper :value="item.quantity" disable-input
                                              @plus="plusAdd(item.sku,item.quantity,index,item.price)"
                                              @minus="minus(item.sku,item.quantity,index,item.price)" max="99"
-                                             min="0" async-change/>
+                                             min="1" async-change/>
                             </div>
                             <div slot="tags">
                                 <van-checkbox :name="item.sku" ref="checkboxes" @click="change(item)"/>
@@ -33,9 +33,10 @@
             </van-checkbox-group>
         </ul>
         <div>
-            <van-submit-bar :price="total" :button-text="btn_text" :loading="loading" @submit="onSubmit">
+            <van-submit-bar :price="total" :button-text="btn_text"  :loading="loading" @submit="onSubmit " to="/order/createOrder">
                 <van-checkbox v-model="check" @click="checkAll">全选</van-checkbox>
             </van-submit-bar>
+
         </div>
     </div>
 </template>
@@ -86,6 +87,7 @@
         methods: {
             onSubmit() {
                 this.loading = true;
+                this.$router.push({path:'/order/createOrder'})
             },
             change(item) {
                 let check = false;
@@ -128,18 +130,27 @@
 
             },
             onClose(sku) {
-                deleteCart(sku);
-                let that = this;
-                let price_init = 0;
-                let num_init = 0;
-                for (const i in that.list) {
-                    that.list.splice(i, 1)
-                    for (let i in that.list) {
-                        price_init += parseFloat(that.list[i].price)
-                        num_init = that.list.length
+                deleteCart(sku).then(res => {
+                    let that = this;
+                    let price_init = 0;
+                    let num_init = 0;
+                    for (const i in that.list) {
+                        that.list.splice(i, 1)
+                        for (let i in that.list) {
+                            price_init += parseFloat(that.list[i].price)
+                            num_init = that.list.length
+                        }
                     }
-                    console.log(that.list)
-                }
+                    console.log(that.list);
+                    this.check = res.data.selectAll;
+                    this.total = res.data.total * 100;
+                    console.log(res.data.totalNum + "aaa" + res.data.total + "1111111111111111111111111111111111")
+                    if (res.data.totalNum != 0 && res.data.totalNum != null) {
+                        this.btn_text = "提交订单" + "(" + res.data.totalNum + ")";
+                    } else {
+                        this.btn_text = "提交订单";
+                    }
+                });
             },
             changeGroup(e) {
                 let {list} = this;
@@ -168,7 +179,9 @@
                 });
             },
             minus(sku, quantity, index, price) {
-                console.log(parseFloat(price));
+                if(this.quantity==1){
+                    Toast.fail('添加失败');
+                }
                 addCartNum(sku, -1).then(res => {
                     if (res.code = "0000") {
                         console.log(res + "-------------res")
@@ -252,9 +265,9 @@
         height: 100%;
     }
 
-    .van-submit-bar {
-        margin-bottom: 48px !important;
-    }
+    /*.van-submit-bar {*/
+    /*    margin-bottom: 48px !important;*/
+    /*}*/
 
     .van-card__tag {
         width: 18px;
@@ -276,5 +289,11 @@
         color: #E55050;
         font-weight: bold;
     }
+    /*.coupon-text{*/
+    /*    font-size: 6px;*/
+    /*    width: 60px;*/
+    /*    margin-bottom: -1px;*/
+    /*    margin-right: 50px;*/
+    /*}*/
 
 </style>
