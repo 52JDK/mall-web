@@ -48,7 +48,6 @@
         if (phone == '') {
             toast('手机号不能为空')
         } else if (!isMobile(phone)) {
-            window.console.log(phone);
             toast('请输入有效的手机号码')
         } else if (!isEmail(email)) {
             toast('请输入有效的邮箱')
@@ -84,7 +83,6 @@ export default {
             }
             let toast = this.$toast;
             if (!verifyPhone(phone, email, toast)) {
-                console.log('简单的表单校验')
                 this.loading = false
                 return;
             }

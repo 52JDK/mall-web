@@ -5,32 +5,32 @@
                 text="受道路封闭影响，发往新疆区域及大连市、鹤岗市的订单派送将有所延迟，请见谅。"
                 mode="closeable"
         />
-            <div class="address-main" >
-                <div class="order-address">
-                    <div class="address" >
-                        <div class="order-address-name">
-                    <span>
-                        申浩
+        <div class="address-main">
+            <div class="order-address">
+                <div class="address" @click="choseAddress">
+                    <div class="order-address-name">
+                        <span>
+                        {{name}}
                     </span>
-                            <span>
-                        15927512880
+                        <span>
+                        {{phone}}
                     </span>
-                        </div>
-                        <div class="order-detail-address"  >
-                            <span>湖北省武汉市江发路</span>
-                        </div>
                     </div>
-
-                    <div class="address-chose">
-                        <van-icon name="arrow" size="16px" color="#b3b3b3"/>
+                    <div class="order-detail-address">
+                        <span>{{address}}</span>
                     </div>
                 </div>
+
+                <div class="address-chose" @click="choseAddress">
+                    <van-icon name="arrow" size="16px" color="#b3b3b3"/>
+                </div>
             </div>
+        </div>
 
 
         <div class="order-product">
             <div class="order-product-img">
-                <swiper class="swiper" >
+                <swiper class="swiper">
                     <div class="swiper-slide" :key="banner" v-for="banner in banners">
                         <swiper-slide>
                             <img :src=banner width="62px" height="62px">
@@ -74,8 +74,8 @@
                 <van-cell title="发票" value="不开发票" v-model="show" is-link position="bottom" @click="showPopup">
                     {{invoiceValue}}
                 </van-cell>
-                <van-popup v-model="show" position="bottom" round >
-                <invoice></invoice>
+                <van-popup v-model="show" position="bottom" round>
+                    <invoice></invoice>
 
                 </van-popup>
             </div>
@@ -83,22 +83,23 @@
 
         <div class="balance-amount">
             <div class="balance-amount-detail">
-            <van-cell-group :border="false">
-                <van-cell title="商品金额" value="￥4999.99" :border="false"/>
-                <van-cell title="运费" value="-￥100.00"  :border="false"/>
-                <van-cell title="金豆" value="-￥10.00" :border="false"/>
-                <van-cell title="运费" value="￥10.00" :border="false"/>
-            </van-cell-group>
+                <van-cell-group :border="false">
+                    <van-cell title="商品金额" value="￥4999.99" :border="false"/>
+                    <van-cell title="运费" value="-￥100.00" :border="false"/>
+                    <van-cell title="金豆" value="-￥10.00" :border="false"/>
+                    <van-cell title="运费" value="￥10.00" :border="false"/>
+                </van-cell-group>
             </div>
         </div>
         <div>
 
-        <van-submit-bar price="11111" button-text="支付"  :loading="loading" @submit="onSubmit " to="/order/createOrder">
-            <div class="bottom-price">
-               <span> 应付：</span>
-                <span style="font-size: 16px">￥10000</span>
-            </div>
-        </van-submit-bar>
+            <van-submit-bar price="11111" button-text="支付" :loading="loading" @submit="onSubmit "
+                            to="/order/createOrder">
+                <div class="bottom-price">
+                    <span> 应付：</span>
+                    <span style="font-size: 16px">￥10000</span>
+                </div>
+            </van-submit-bar>
         </div>
     </div>
 
@@ -106,12 +107,12 @@
 
 <script>
     import Vue from 'vue';
-    import {NoticeBar} from 'vant';
+    import {NoticeBar, Toast} from 'vant';
     import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
     import {CouponCell, CouponList} from 'vant';
-    import { Form } from 'vant';
+    import {Form} from 'vant';
     import invoice from './invoice'
-    import { Overlay } from 'vant';
+    import {Overlay} from 'vant';
 
     Vue.use(Overlay);
     Vue.use(Form);
@@ -144,44 +145,27 @@
                 // banners: ['http://52jdk.com/head.jpeg'],
                 couponValue: "暂无可用",
                 chosenCoupon: -1,
-                showList:false,
+                showList: false,
                 loading: false,
-                isShow:false,
-                invoiceValue:"暂不开票",
+                addressId: 0,
+                name: "",
+                phone: "",
+                address: "",
+                isShow: false,
+                invoiceValue: "暂不开票",
                 show: false,
                 username: '',
                 password: '',
                 coupons: [coupon],
                 disabledCoupons: [coupon],
-                banners: ['http://52jdk.com/head.jpeg','http://52jdk.com/head.jpeg','http://52jdk.com/head.jpeg'],
-                // swiperOption: {
-                //     slidesPerView: 3,
-                //     spaceBetween: 50,
-                //     pagination: {
-                //         el: '.swiper-pagination',
-                //         clickable: true
-                //     },
-                //     breakpoints: {
-                //         1024: {
-                //             slidesPerView: 4,
-                //             spaceBetween: 40
-                //         },
-                //         768: {
-                //             slidesPerView: 3,
-                //             spaceBetween: 30
-                //         },
-                //         640: {
-                //             slidesPerView: 2,
-                //             spaceBetween: 20
-                //         },
-                //         320: {
-                //             slidesPerView: 1,
-                //             spaceBetween: 10
-                //         }
-                //     }
-                // }
+                banners: ['http://52jdk.com/head.jpeg', 'http://52jdk.com/head.jpeg', 'http://52jdk.com/head.jpeg'],
             }
         },
+
+        created() {
+            this.getParams()
+        },
+
         methods: {
             onChange(index) {
                 this.showList = false;
@@ -193,10 +177,26 @@
             showPopup() {
                 this.show = true;
             },
-            ab(){
-                this.isShow="#E55050";
+            choseAddress() {
+                this.$router.push({
+                    path: '/order/addressList',
+                    query: {
+                        id:this.addressId
+                    }})
+            },
+            getParams() {
+                // 取到路由带过来的参数
+                let routerParams = this.$route.query;
+                // 将数据放在当前组件的数据内
+                this.name = routerParams.name;
+                this.phone = routerParams.phone;
+                this.address = routerParams.address;
+                this.addressId = routerParams.id;
             }
         },
+        watch: {
+            '$route': 'getParams'
+        }
     }
 
 </script>
@@ -338,6 +338,7 @@
         background: #FFF;
 
     }
+
     .balance-amount-detail {
         padding-top: 6px;
     }
@@ -345,11 +346,13 @@
     .product-balance-detail {
         padding-top: 6px;
     }
-    .invoice{
+
+    .invoice {
         width: 100%;
         height: 500px;
     }
-    .bottom-price{
+
+    .bottom-price {
         color: #E55050;
         margin-right: 35%;
     }

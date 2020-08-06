@@ -34,7 +34,6 @@ export default {
             this.whellList = res.data;
                 let that = this;
                 let image = res.data[0];
-                window.console.log(image);
                 let img = new Image();
                 img.src = image.url;
                 let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

@@ -124,7 +124,6 @@ function getAuthInfo(appParams){
             resolve(res);
         },(error)=>{
             reject(error);
-            console.log('请先登录')
         })
         //toast('加载中...',{type:'loading',time:9999999});
         // axiosPost(config.basePath+'/services/user/refreshToken',postData, {

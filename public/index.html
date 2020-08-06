@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,15 +10,21 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
     />
+    <!--    引入高德,一定要在头部引入,因为高德需要预加载-->
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=0cf0d60edb40824ff15e85359d49a79d&callback=init"></script>
+
     <link rel="icon" href="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico">
     <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=890a7be017930c49e1711d451be4db3b"></script>  -->
     <title>小R商城</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+</head>
+<body>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=0cf0d60edb40824ff15e85359d49a79d&callback=init"></script>
+
+<noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>

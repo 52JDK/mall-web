@@ -203,7 +203,6 @@
                     this.sku.stock_num=res.data.stock_num;
                     this.none_sku=res.data.none_sku;
                     this.hide_stock=res.data.hide_stock;
-                    console.log(this.data.list, "res.data.listres.data.listres.data.listres.data.listres.data.list");
                 });
             },
             showBaseFun() {
@@ -211,16 +210,13 @@
                 this.showBase = true;
             },
             onBuyClicked(data) {
-                console.log(data, "onBuyClicked");
                 this.showBase = false;
             },
 
             onAddCartClicked(data) {
                 let {} = this;
                 addCart(data).then(res => {
-                    console.log(res)
                 });
-                console.log(data, "onAddCartClicked");
                 this.showBase = false;
             },
             getGoodsList() {

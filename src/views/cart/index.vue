@@ -111,10 +111,8 @@
                     } else {
                         this.btn_text = "提交订单";
                     }
-                    console.log(res.data.selectAll)
                 });
 
-                console.log(item.sku, item.checked)
             },
             checkAll() {
                 let select = !this.checked;
@@ -141,10 +139,8 @@
                             num_init = that.list.length
                         }
                     }
-                    console.log(that.list);
                     this.check = res.data.selectAll;
                     this.total = res.data.total * 100;
-                    console.log(res.data.totalNum + "aaa" + res.data.total + "1111111111111111111111111111111111")
                     if (res.data.totalNum != 0 && res.data.totalNum != null) {
                         this.btn_text = "提交订单" + "(" + res.data.totalNum + ")";
                     } else {
@@ -184,7 +180,6 @@
                 }
                 addCartNum(sku, -1).then(res => {
                     if (res.code = "0000") {
-                        console.log(res + "-------------res")
                         quantity = quantity - 1;
                         if (quantity == 0) {
                             let that = this;
@@ -196,7 +191,6 @@
                                     price_init += parseFloat(that.list[i].price)
                                     num_init = that.list.length
                                 }
-                                console.log(that.list)
                             }
                             this.check = res.data.selectAll;
                             this.btn_text = "提交订单";

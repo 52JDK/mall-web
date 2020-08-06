@@ -1,7 +1,7 @@
 import axios from "axios"
 const service = axios.create({
-    baseURL:'http://www.52jdk.com:8079',
-    // baseURL:'http://127.0.0.1:8079',
+    // baseURL:'http://www.52jdk.com:8079',
+    baseURL:'http://127.0.0.1:8079',
     timeout:50000
 })
 import { Toast  } from "vant"
@@ -26,7 +26,6 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
     response => {
-        console.log(response,"response")
         Toast.clear();
         const res = response.data
         // 这里处理一些response 正常放回时的逻辑

@@ -86,7 +86,7 @@ const routes = [
   },
   {
     path: '/order/createOrder',
-    name: 'detail',
+    name: 'createOrder',
     component: () => import('../views/order/createOrder'),
     meta:{
       layout:false,
@@ -94,6 +94,27 @@ const routes = [
       title:'创建订单'
     }
   },
+  {
+    path: '/order/addressList',
+    name: 'addressList',
+    component: () => import('../views/order/addressList'),
+    meta:{
+      layout:false,
+      head:true,
+      title:'地址列表'
+    }
+  },
+  {
+    path: '/order/editAddress',
+    name: 'editAddress',
+    component: () => import('../views/order/editAddress'),
+    meta:{
+      layout:false,
+      head:true,
+      title:'编辑地址'
+    }
+  },
+
 ]
 
 const router = new VueRouter({

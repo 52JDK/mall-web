@@ -74,7 +74,6 @@ export default {
             init(o) {
               // o 是高德地图定位插件实例
                  o.getCurrentPosition((status, result) => {
-                     console.log(status,result,"zzzzzzzzzzzzzzzzzz")
                    if (result && result.position) {
                        alert( result.formattedAddress)
                      that.zoom = 18; // 如果key是企业的，还可以直接result.addressComponent获取省市，周边等信息
@@ -97,7 +96,6 @@ export default {
             pName: 'Scale',
             events: {
               init(instance) {
-                console.log(instance);
               }
             }
         }

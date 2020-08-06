@@ -3,7 +3,7 @@
     <van-tabbar-item  icon="shop-o"  to="/home" >首页</van-tabbar-item>
     <van-tabbar-item icon="apps-o">分类</van-tabbar-item>
     <van-tabbar-item to="/cart" icon="shopping-cart-o">购物车</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">我</van-tabbar-item>
+    <van-tabbar-item icon="friends-o" to="/user">我</van-tabbar-item>
   </van-tabbar>
   </template>
   <script type="text/javascript">
