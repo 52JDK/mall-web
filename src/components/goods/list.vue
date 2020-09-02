@@ -14,7 +14,7 @@
             <div class="item" v-for="(item,index) in list" :key="index">
                 <img :src="item" alt="">
             </div>
-            </van-swipe-item>   
+            </van-swipe-item>
             </van-swipe>
         </div>
              <van-list
@@ -24,7 +24,7 @@
                 finished-text="没有更多了"
                 @load="onLoad"
                 :offset="1"
-                v-if="type=='goods'" 
+                v-if="type=='goods'"
             >
                 <div id="list-content" class="goods-list">
                      <van-cell  class="goods-item" v-for="(item,index) in goodsList" :key="index" @click="tapDetail(item.productId)">
@@ -69,7 +69,7 @@
                    "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg",
                    "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg" ,
                    "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg",
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg" 
+                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg"
                 ],
                 goodsList:[],
                 finished:false
@@ -112,17 +112,17 @@
                         //表示没有下一页了
                         if(res.data.length<pageSize){
                              this.finished = true;
-                        } 
+                        }
                    }
                 })
-                
+
             },
             onLoad(){
                this.pageNum++;
                this.getGoodsList();
             },
             tapDetail(id){
-                this.$router.push({ 
+                this.$router.push({
                     name:'detail',
                     params:{id}
                 })
@@ -199,7 +199,7 @@
                 width: 100%;
                 height: 100%;
                 display: block;
-            }   
+            }
         }
         .goods-info{
             flex: 1;
@@ -207,7 +207,7 @@
             .title{
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                overflow: hidden;
+                /*overflow: hidden;*/
                 word-break: break-all;
                 font-size:15px;
                 font-weight:500;
@@ -230,7 +230,7 @@
                         font-size:18px;
                         font-family:PingFang SC;
                         font-weight:bold;
-                        color:rgba(229,80,80,1); 
+                        color:rgba(229,80,80,1);
                     }
                 }
                 .cart-icon{

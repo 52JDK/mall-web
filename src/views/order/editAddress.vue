@@ -60,7 +60,7 @@
                     addAddress(data).then(res => {
                         if(res.code=="0000"){
                             this.$router.push({path: '/order/addressList',
-                                query:{
+                                params:{
                                     id: id,
                                 }})
                             Toast.success("添加成功")

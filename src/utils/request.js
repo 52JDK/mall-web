@@ -1,7 +1,7 @@
 import axios from "axios"
 const service = axios.create({
-    // baseURL:'http://www.52jdk.com:8079',
-    baseURL:'http://127.0.0.1:8079',
+    // baseURL:'http://javamall.52jdk.com',
+    baseURL:'http://10.28.143.236:8079',
     timeout:50000
 })
 import { Toast  } from "vant"

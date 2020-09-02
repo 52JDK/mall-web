@@ -1,127 +1,250 @@
 <template>
-    <div class="user-container">
-          <el-amap
-          vid="amap"
-          :plugin="plugin"
-          class="amap-demo"
-          :center="center"
-          :zoom="zoom"
-          :events="events"
-          ref="map"
-        ></el-amap>
-        <div class="toolbar">
-          <span>{{loaded}}</span>
+    <div class="person-center">
+
+        <div class="my-head">
+            <div class="head-img">
+                <img width="50px" height="50px" alt="" :src="headImg"/>
+                <label>{{nickname}}</label>
+                <button><i class="iconfont iconjifen"></i> 每日签到</button>
+            </div>
+        </div>
+        <div class="my-vip">
+            <div class="vip-description">
+                <p class="vip-text">
+                    开通超级会员
+                    <img src="../../assets/images/ar.png" width="16" height="16" alt=""/>
+                </p>
+                <p>可享95折专享价免邮费等权益</p>
+            </div>
+            <div class="vip-icon">
+                <van-icon name="vip-card" size="40px"/>
+            </div>
+        </div>
+        <div class="my-order">
+            <div class="my-order-cell">
+                <van-cell title="我的订单" value="查看全部订单" is-link title-class="my-order-list" size="16px"/>
+            </div>
+            <div>
+                <van-grid :border="false" icon-size="22px" :column-num="5">
+                    <van-grid-item icon="todo-list-o" text="待付款" url="" :badge="tobePay" :to="{ name: 'orderList', params: { active: 0 }}"/>
+                    <van-grid-item icon="logistics" text="待发货" url="" :badge="pay" :to="{ name: 'orderList', params: { active: 1 }}"/>
+                    <van-grid-item icon="send-gift-o" text="待收货" url="" :badge="tobeDelivered" :to="{ name: 'orderList', params: { active: 2 }}"/>
+                    <van-grid-item icon="notes-o" text="待评价" url="" :badge="received" :to="{ name: 'orderList', params: { active: 3 }}"/>
+                    <van-grid-item icon="after-sale" text="售后" url=""/>
+                </van-grid>
+            </div>
+        </div>
+        <div class="swipe">
+            <van-swipe>
+                <van-swipe-item v-for="(image, index) in images" :key="index">
+                    <img v-lazy="image" width="100%" alt=""/>
+                </van-swipe-item>
+            </van-swipe>
+        </div>
+        <other class="other-icon"/>
+        <div class="recommend-product">
+            <van-divider>为你推荐</van-divider>
         </div>
     </div>
 </template>
+
 <script>
-export default {
-  components: {},
-  data() {
-    let that = this;
-    return {
-      center: [121.59996, 31.197646],
-      adress: "",
-      loaded: "定位中,请稍候!",
-      zoom: 1,
-      events: {
-        //地图点击事件
-        click: e => {
-          let { lng, lat } = e.lnglat;
-          that.lng = lng;
-          that.lat = lat;
-          // 这里通过高德 SDK 完成。
-          var geocoder = new AMap.Geocoder({
-            radius: 1000,
-            extensions: "all"
-          });
-          geocoder.getAddress([lng, lat], function(status, result) {
-            if (status === "complete" && result.info === "OK") {
-              if (result && result.regeocode) {
-                that.loaded = result.regeocode.formattedAddress;
-                that.center = [that.lng, that.lat];
-                that.$nextTick();
-              }
-            }
-          });
+    import other from "./other";
+    import Vue from 'vue';
+    import {Grid, GridItem} from 'vant';
+    import {Icon} from 'vant';
+    import {Cell, CellGroup} from 'vant';
+    import {Image as VanImage} from 'vant';
+    import {Swipe, SwipeItem} from 'vant';
+    import {Lazyload} from 'vant';
+    import {Divider} from 'vant';
+    import {personCenter} from "../../api/user";
+
+    Vue.use(Divider);
+    Vue.use(Lazyload);
+    Vue.use(Swipe);
+    Vue.use(SwipeItem);
+    Vue.use(VanImage);
+    Vue.use(Cell);
+    Vue.use(CellGroup);
+
+    Vue.use(Icon);
+    Vue.use(Grid);
+    Vue.use(GridItem);
+    export default {
+        components: {other},
+        data() {
+            return {
+                nickname: '',
+                tobePay: '',
+                pay: '',
+                tobeDelivered: '',
+                received: '',
+                headImg: '',
+                images: [
+                    'https://haitao.nosdn2.127.net/ThUbIr9WnE7TbTwTapp-kvAiT1809190053_960_480.jpg',
+                    'https://haitao.nos.netease.com/f3kJUUtkrDbsiU1LtopkHcBGgT1809182243_960_480.jpg',
+                ],
+            };
         },
-        //地图平移事件
-        moveend: e => {
-          let [lng, lat] = that.$refs.map.$$getCenter();
-          that.lng = lng;
-          that.lat = lat;
-          // 这里通过高德 SDK 完成。
-          var geocoder = new AMap.Geocoder({
-            radius: 1000,
-            extensions: "all"
-          });
-          geocoder.getAddress([lng, lat], function(status, result) {
-            if (status === "complete" && result.info === "OK") {
-              if (result && result.regeocode) {
-                that.loaded = result.regeocode.formattedAddress;
-                // that.center = [that.lng, that.lat];
-                // that.position = result.regeocode.formattedAddress;
-                that.$nextTick();
-              }
-            }
-          });
-        }
-      },
-      plugin: [
-        {
-          pName: "Geolocation",
-          events: {
-            init(o) {
-              // o 是高德地图定位插件实例
-                 o.getCurrentPosition((status, result) => {
-                   if (result && result.position) {
-                       alert( result.formattedAddress)
-                     that.zoom = 18; // 如果key是企业的，还可以直接result.addressComponent获取省市，周边等信息
-                     that.adress = result.formattedAddress;
-                    that.loaded = '当前定位为:'+ that.adress;
-                    that.center = [result.position.lng, result.position.lat];
-                     that.componentMarker.position = [
-                       result.position.lng,
-                       result.position.lat
-                     ];
-                     that.$nextTick();
-                  }else{
-                      that.loaded = '获取定位失败,请重试!';
-                  }
-                 });
-            }
-          }
+        created() {
+            this.personCenter();
         },
-        {
-            pName: 'Scale',
-            events: {
-              init(instance) {
-              }
-            }
-        }
-      ],
-    };
-  },
-  computed: {},
-  watch: {},
-  methods: {},
-  created() {
-  },
-  mounted() {
-  }
-};
+
+        methods: {
+            personCenter() {
+                personCenter().then(res => {
+                    this.nickname = res.data.data.user.userName;
+                    this.headImg = res.data.data.user.headImg;
+                    if (res.data.data.tobePay > 0) {
+                        this.tobePay = res.data.data.tobePay;
+                    }
+                    if (res.data.data.tobeDelivered > 0) {
+                        this.tobeDelivered = res.data.data.tobeDelivered;
+                    }
+                    if (res.data.data.received > 0) {
+                        this.received = res.data.data.received;
+                    }
+                    if (res.data.data.pay > 0) {
+                        this.pay = res.data.data.pay;
+                    }
+                    console.log(res.data.data);
+
+                })
+            },
+
+        },
+    }
+
 </script>
 <style>
 
-    .user-container{
+    .recommend-product {
+        padding-top: 20px;
+    }
+
+    .swipe {
+        width: 94%;
+        margin-left: 3%;
+        margin-top: 14px;
+
+    }
+
+    .van-swipe {
+        border-radius: 10px;
+    }
+
+    .my-order {
+        width: 94%;
+        margin-left: 3%;
+        margin-top: 14px;
+        border-radius: 10px;
+        height: 120px;
+        background-color: white;
+
+    }
+
+    .van-grid-item__content {
+        padding-top: 13px !important;
+    }
+
+    .head-img label {
+        padding-left: 2%;
+    }
+
+    .head-img img {
+        border: 3px solid #fff;
+        border-radius: 50%;
+        vertical-align: -18px;
+        margin-left: 6%;
+    }
+
+    .head-img button {
+        border-radius: 4%;
+        font-size: 12px !important;
+        background-color: #bb9951;
+        width: 80px;
+        height: 20px;
+        border: none;
+        float: right;
+        margin-right: 20px;
+        margin-top: 15px;
+    }
+
+    .my-order-cell {
+        padding-top: 8px;
+    }
+
+    .other-icon {
+        margin-top: 14px;
+
+    }
+
+    .my-vip {
+        width: 94%;
+        margin-left: 3%;
+        height: 60px;
+        margin-top: -30px;
+        background-image: linear-gradient(to right, #281F0D, #5D5139);
+        border-radius: 10px;
+        color: #f1debd;
+    }
+
+    .my-head {
+        background-image: linear-gradient(to right, #dfc48e, #c4a566);
         width: 100%;
-        height: 100vh;
+        height: 130px;
     }
-    .amap-demo{
-        height:  80vh !important;
+
+    .head-img {
+        padding-top: 10%;
+        color: white;
+        font-size: 18px;
+
     }
-    .amap-geolocation-con{
-        /* right: 10px !important; */
-        left: 330px !important;
+
+    .head-img label {
+        padding-left: 2%;
+    }
+
+    .head-img img {
+        border: 3px solid #fff;
+        border-radius: 50%;
+        vertical-align: -18px;
+        margin-left: 6%;
+    }
+
+    .head-img button {
+        border-radius: 4%;
+        font-size: 12px !important;
+        background-color: #bb9951;
+        width: 80px;
+        height: 20px;
+        border: none;
+        float: right;
+        margin-right: 20px;
+        margin-top: 15px;
+    }
+
+    .vip-description {
+        padding-top: 10px;
+        margin-left: 10%;
+        width: 60%;
+    }
+
+    .vip-text {
+        font-size: 16px;
+        font-weight: bolder;
+
+    }
+
+    .vip-text img {
+        vertical-align: -2px;
+    }
+
+    .vip-icon {
+        float: right;
+        margin-top: -35px;
+        margin-right: 10px;
     }
 </style>

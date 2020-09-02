@@ -7,3 +7,11 @@ export function login(data){
         data
       })
 }
+
+export function personCenter(data) {
+    return request({
+        url: '/home/personCenter',
+        method: 'post',
+        data
+    })
+}

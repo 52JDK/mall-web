@@ -26,27 +26,11 @@
             return {
                 chosenAddressId: 0,
                 list: [],
-                // list: [
-                //     {
-                //         id: '1',
-                //         name: '张三',
-                //         tel: '13000000000',
-                //         address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室',
-                //         isDefault: "true",
-                //     },
-                //     {
-                //         id: '2',
-                //         name: '李四',
-                //         tel: '1310000000',
-                //         address: '浙江省杭州市拱墅区莫干山路 50 号',y
-                //         isDefault: "",
-                //     },
-                // ],
             };
         },
         created() {
             this.find();
-            this.getParams();
+            this.getListParams();
         },
         methods: {
             onAdd() {
@@ -58,7 +42,7 @@
             onEdit(item, index) {
                 this.$router.push({
                     path: '/order/editAddress',
-                    query: {
+                    params: {
                         name: item.name,
                         phone: item.tel,
                         address: item.address,
@@ -70,7 +54,6 @@
             },
             find() {
                 findAddress().then(res => {
-                    console.log(res.data)
                     if (res.code == "0000") {
                         this.list = res.data;
                     }
@@ -80,21 +63,19 @@
                 this.$router.push({
                     path: '/order/createOrder',
                     query: {
-                        name: item.name,
-                        phone: item.tel,
-                        address: item.address,
                         id: item.id,
                     }
                 })
             },
-            getParams() {
+            getListParams() {
                 // 取到路由带过来的参数
                 let routerParams = this.$route.query;
+                console.log(routerParams);
                 this.chosenAddressId = routerParams.id;
             }
         },
         watch: {
-            '$route': 'getParams'
+            '$route': 'getListParams'
         }
     };
 </script>

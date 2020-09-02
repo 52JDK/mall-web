@@ -1,0 +1,72 @@
+{
+  "id": "2029315",
+  "name": "r-mall",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "r-mall",
+  "glyphs": [
+    {
+      "icon_id": "9962157",
+      "name": "优惠券",
+      "font_class": "youhuiquan",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "10452311",
+      "name": "积分",
+      "font_class": "jifen1",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "6510872",
+      "name": "拼团",
+      "font_class": "pintuan",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "11511505",
+      "name": "合作",
+      "font_class": "hezuo",
+      "unicode": "e68f",
+      "unicode_decimal": 59023
+    },
+    {
+      "icon_id": "911575",
+      "name": "打赏",
+      "font_class": "dashang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "5532034",
+      "name": "联系",
+      "font_class": "lianxi",
+      "unicode": "e6ce",
+      "unicode_decimal": 59086
+    },
+    {
+      "icon_id": "13632776",
+      "name": "地址",
+      "font_class": "dizhi",
+      "unicode": "e6e4",
+      "unicode_decimal": 59108
+    },
+    {
+      "icon_id": "14724669",
+      "name": "设 置 (1)",
+      "font_class": "shezhi1",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1325475",
+      "name": "积分",
+      "font_class": "jifen",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    }
+  ]
+}

@@ -3,7 +3,7 @@
         <div class="invoice">
             <van-tabs>
                 <van-tab title="个人" name="a">
-                    <van-form @submit="onSubmit">
+                    <van-form >
                         <van-field
                                 name="发票类型"
                                 label="发票类型"
@@ -76,7 +76,7 @@
         name: "invoice",
         data() {
             return {
-                show: true,
+                show: false,
                 username: '',
                 password: '',
             };

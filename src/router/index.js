@@ -114,7 +114,26 @@ const routes = [
       title:'编辑地址'
     }
   },
-
+  {
+    path: '/order/orderProduct',
+    name: 'orderProduct',
+    component: () => import('../views/order/orderProduct'),
+    meta:{
+      layout:false,
+      head:true,
+      title:'编辑地址'
+    }
+  },
+  {
+    path: '/order/orderList',
+    name: 'orderList',
+    component: () => import('../views/order/orderList'),
+    meta:{
+      layout:false,
+      head:true,
+      title:'订单列表'
+    }
+  },
 ]
 
 const router = new VueRouter({

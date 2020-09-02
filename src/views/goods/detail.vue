@@ -315,7 +315,7 @@
                 font-size: 15px;
                 font-weight: 500;
                 text-overflow: -o-ellipsis-lastline;
-                overflow: hidden;
+                /*overflow: hidden;*/
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;

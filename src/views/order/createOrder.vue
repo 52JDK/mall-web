@@ -31,14 +31,14 @@
         <div class="order-product">
             <div class="order-product-img">
                 <swiper class="swiper">
-                    <div class="swiper-slide" :key="banner" v-for="banner in banners">
+                    <div class="swiper-slide" :key="banner.sku" v-for="banner in banners">
                         <swiper-slide>
-                            <img :src=banner width="62px" height="62px">
+                            <img :src=banner.image width="68px" height="68px">
                         </swiper-slide>
                     </div>
                 </swiper>
             </div>
-            <div class="order-product-to">
+            <div class="order-product-to" @click="toProduct">
                 <div class="order-product-num">
                     <span> 共100件</span>
                 </div>
@@ -53,7 +53,7 @@
                 <van-coupon-cell
                         :coupons="coupons"
                         :chosen-coupon="chosenCoupon"
-                        @click="showList = true"
+                        @click="findCoupon"
                 />
                 <!-- 优惠券列表 -->
                 <van-popup
@@ -70,34 +70,52 @@
                             @exchange="onExchange"
                     />
                 </van-popup>
-                <van-cell title="礼品卡" value="暂无" disabled/>
-                <van-cell title="发票" value="不开发票" v-model="show" is-link position="bottom" @click="showPopup">
-                    {{invoiceValue}}
-                </van-cell>
-                <van-popup v-model="show" position="bottom" round>
-                    <invoice></invoice>
-
-                </van-popup>
+                <van-cell title="礼品卡">暂无</van-cell>
             </div>
         </div>
 
         <div class="balance-amount">
             <div class="balance-amount-detail">
                 <van-cell-group :border="false">
-                    <van-cell title="商品金额" value="￥4999.99" :border="false"/>
-                    <van-cell title="运费" value="-￥100.00" :border="false"/>
-                    <van-cell title="金豆" value="-￥10.00" :border="false"/>
-                    <van-cell title="运费" value="￥10.00" :border="false"/>
+                    <van-cell title="商品金额" :border="false">
+                        ￥{{totalAmount}}
+                    </van-cell>
+                    <van-cell title="金豆" :border="false">
+                        -￥{{point}}
+                    </van-cell>
+                    <van-cell title="优惠券" :border="false">
+                        -￥{{point}}
+                    </van-cell>
+                    <van-cell title="运费" :border="false">
+                        ￥{{freight}}
+                    </van-cell>
                 </van-cell-group>
             </div>
         </div>
         <div>
 
-            <van-submit-bar price="11111" button-text="支付" :loading="loading" @submit="onSubmit "
-                            to="/order/createOrder">
+            <van-popup v-model="show" round >
+                <div class="pay-code-div">
+                    <div class="wx-pay-text">
+                            <img src="../../assets/images/wxlog.png" width="40px" height="40px"/>
+                            <a >微信支付</a>
+                    </div>
+
+                    <div class="pay-code">
+                        <img class="code" :src="payUrl" alt="">
+                    </div>
+                    <div class="pay-warn">
+                        <a disabled="true">长按识别二维码支付</a>
+                    </div>
+                </div>
+            </van-popup>
+
+
+            <van-submit-bar button-text="支付" :loading="loading"
+                            @submit="createOrder()">
                 <div class="bottom-price">
                     <span> 应付：</span>
-                    <span style="font-size: 16px">￥10000</span>
+                    <span style="font-size: 16px;font-weight: bolder">￥{{totalAmount}}</span>
                 </div>
             </van-submit-bar>
         </div>
@@ -107,18 +125,22 @@
 
 <script>
     import Vue from 'vue';
-    import {NoticeBar, Toast} from 'vant';
+    import {NoticeBar} from 'vant';
     import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
     import {CouponCell, CouponList} from 'vant';
     import {Form} from 'vant';
     import invoice from './invoice'
     import {Overlay} from 'vant';
+    import {orderSure, createOrder, orderPay} from "../../api/order";
+    import {Popup} from 'vant';
 
     Vue.use(Overlay);
     Vue.use(Form);
     Vue.use(CouponCell);
     Vue.use(CouponList);
     Vue.use(NoticeBar);
+    Vue.use(Popup);
+
     const coupon = {
         available: 1,
         condition: '无使用门槛\n最多优惠12元',
@@ -147,26 +169,54 @@
                 chosenCoupon: -1,
                 showList: false,
                 loading: false,
+                totalAmount: 0,
                 addressId: 0,
-                name: "",
-                phone: "",
-                address: "",
-                isShow: false,
+                name: '',
+                point: 0,
+                freight: 0,
+                phone: '',
+                address: '',
                 invoiceValue: "暂不开票",
                 show: false,
                 username: '',
                 password: '',
-                coupons: [coupon],
-                disabledCoupons: [coupon],
-                banners: ['http://52jdk.com/head.jpeg', 'http://52jdk.com/head.jpeg', 'http://52jdk.com/head.jpeg'],
+                payUrl: '',
+                payAmount: 0,
+                coupons: [],
+                disabledCoupons: [],
+                banners: [
+                    {
+                        sku: "1000001",
+                        productName: "花生",
+                        quantity: 1,
+                        price: 2399.99,
+                        image: "https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg",
+                        checked: true,
+                        title: "【每日一粒益智又长高】 Lifeline Care 儿童果冻鱼油DHA维生素D3聪明长高 软糖 30粒 2件装"
+                    },
+                    {
+                        sku: "1000002",
+                        productName: "瓜子",
+                        quantity: 1,
+                        price: 2399.00,
+                        image: "https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg",
+                        checked: true,
+                        title: "瓜子"
+                    }
+                ],
             }
         },
 
-        created() {
-            this.getParams()
+        mounted() {
+            let routerParams = this.$route.query;
+            this.orderSure(routerParams);
+            this.getOrderParams();
+
         },
 
+
         methods: {
+
             onChange(index) {
                 this.showList = false;
                 this.chosenCoupon = index;
@@ -181,21 +231,58 @@
                 this.$router.push({
                     path: '/order/addressList',
                     query: {
-                        id:this.addressId
-                    }})
+                        id: this.addressId
+                    }
+                })
             },
-            getParams() {
+            createOrder() {
+
+                let data = {
+                    addressId: this.addressId,
+                    couponId: this.couponId,
+                    remark: this.remark,
+                    payAmount: this.payAmount,
+                };
+
+                createOrder(data).then(res=>{
+                    orderPay().then(res=>{
+                        this.payUrl = res.data;
+                        this.show = true;
+                    })
+                })
+            },
+
+            orderSure(routerParams) {
+                orderSure(routerParams.id).then(res => {
+                    this.name = res.data.name;
+                    this.phone = res.data.phone;
+                    this.address = res.data.addressDetail;
+                    this.addressId = res.data.addressId;
+                    this.totalAmount = res.data.cartResponse.total;
+                    this.coupons = res.data.userCoupon.sureCoupon;
+                    this.disabledCoupons = res.data.userCoupon.notUserCoupon;
+                    this.point = res.data.point;
+                    this.freight = res.data.freight;
+                    this.payAmount = res.data.payAmount;
+                });
+            },
+            getOrderParams() {
                 // 取到路由带过来的参数
                 let routerParams = this.$route.query;
                 // 将数据放在当前组件的数据内
-                this.name = routerParams.name;
-                this.phone = routerParams.phone;
-                this.address = routerParams.address;
                 this.addressId = routerParams.id;
+            },
+            toProduct() {
+                this.$route.push({
+                    path: '/order/orderProduct',
+                })
+            },
+            findCoupon() {
+                this.showList = true;
             }
         },
         watch: {
-            '$route': 'getParams'
+            '$route': 'getOrderParams'
         }
     }
 
@@ -266,8 +353,8 @@
     }
 
     .swiper-slide {
-        width: 75px;
-        height: 75px;
+        width: 80px;
+        height: 80px;
     }
 
     .address-chose {
@@ -287,6 +374,7 @@
     .order-product-img {
         width: 72%;
         float: left;
+        margin-left: 5px;
     }
 
     .order-product-to {
@@ -329,6 +417,42 @@
 
     }
 
+    .pay-code-div {
+        background: #25AB38;
+        width: 220px;
+        height: 260px;
+    }
+
+
+    .wx-pay-text {
+        color: #FFFFFF;
+        font-size: 30px;
+        font-family: SONGTI, serif;
+        width: 160px;
+        height: 50px;
+        margin: 0 auto;
+    }
+
+    .wx-pay-text img {
+        vertical-align:-10px;
+    }
+
+    .pay-code {
+        margin-left: 16%;
+        margin-top: 10px;
+    }
+
+    .pay-warn {
+        color: #FFFFFF;
+        font-family: SONGTI, serif;
+        font-size: 15px;
+        /*margin: 0 auto;*/
+        width: 150px;
+        height: 20px;
+        margin-top: 4px;
+        margin-left: 18%;
+    }
+
     .balance-amount {
         margin-top: 20px;
         margin-left: 5%;
@@ -354,7 +478,8 @@
 
     .bottom-price {
         color: #E55050;
-        margin-right: 35%;
+        text-align: left;
+        width: 70%;
     }
 
 </style>
