@@ -21,6 +21,7 @@ const routes = [
     meta:{
       layout:true,
       head:true,
+      headReturn:false,
       title:'首页'
     }
   },
@@ -31,16 +32,18 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'密码登录'
     }
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login/index'),
+    component: () => import('../views/login/login'),
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'登录'
     }
   },
@@ -51,6 +54,18 @@ const routes = [
     meta:{
       layout:true,
       head:true,
+      headReturn:true,
+      title:'分类'
+    }
+  },
+  {
+    path: '/categoryList',
+    name: 'categoryList',
+    component: () => import('../views/category/categoryList'),
+    meta:{
+      layout:true,
+      head:true,
+      headReturn:true,
       title:'分类'
     }
   },
@@ -61,6 +76,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'购物车'
     }
   },
@@ -71,6 +87,7 @@ const routes = [
     meta:{
       layout:true,
       head:true,
+      headReturn:true,
       title:'我的'
     }
   },
@@ -81,6 +98,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'商品详情'
     }
   },
@@ -91,6 +109,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'创建订单'
     }
   },
@@ -101,6 +120,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'地址列表'
     }
   },
@@ -111,6 +131,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'编辑地址'
     }
   },
@@ -121,6 +142,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'编辑地址'
     }
   },
@@ -131,6 +153,7 @@ const routes = [
     meta:{
       layout:false,
       head:true,
+      headReturn:true,
       title:'订单列表'
     }
   },
@@ -140,5 +163,22 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next();
+  } else {
+    let token = localStorage.getItem('Authorization');
+
+    if (token === 'null' || token === '') {
+      next('/login');
+    } else {
+      next();
+    }
+  }
+});
 
 export default router

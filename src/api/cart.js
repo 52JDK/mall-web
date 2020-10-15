@@ -6,7 +6,7 @@ export function addCart(data) {
         url: '/cart/addCart',
         method: 'post',
         data: {
-            sku: data.selectedkSuComb.id,
+            sku: data.selectedSkuComb.id,
             quantity: data.selectedNum
         }
     })

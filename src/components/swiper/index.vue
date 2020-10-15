@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="swiper-class">
     <van-swipe
       :autoplay="3000"
       :style="'height:' + height + 'px'"
@@ -48,4 +48,8 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.swiper-class{
+  background: #F5F5F5 !important;
+}
+</style>

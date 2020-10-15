@@ -19,7 +19,19 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const store = new Vuex.Store({
   modules,
-  getters
+  getters,
+  state: {
+    // 存储token
+    Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
+  },
+
+  mutations: {
+    // 修改token，并将token存入localStorage
+    changeLogin (state, user) {
+      state.Authorization = user.Authorization;
+      localStorage.setItem('Authorization', user.Authorization);
+    }
+  }
 })
 
 export default store

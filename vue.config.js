@@ -1,5 +1,5 @@
 const path = require('path')
-
+const CompressionPlugin = require('compression-webpack-plugin')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -29,6 +29,7 @@ module.exports = {
             }
         }
     },
+
     chainWebpack(config) {
         config.plugins.delete('preload') // TODO: need test
         config.plugins.delete('prefetch') // TODO: need test
@@ -89,6 +90,7 @@ module.exports = {
       open: true,
       port: 8066,
       disableHostCheck: true,
-    }
+    },
+
 
 }

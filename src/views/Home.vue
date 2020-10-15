@@ -7,14 +7,16 @@
     <homeSwiper/>
     <navLink/>
     <div class="banner-img">
-      <img src="http://lppzcup.oss-cn-shanghai.aliyuncs.com//c5a2cd59de9f4fa88c0dc972f7e61683.jpg" alt="">
+      <img src="http://ftp.52jdk.com/coupon-2.jpg" @click="onImgClick" alt="">
     </div>
-    <van-notice-bar
+    <van-notice-bar color="#1989fa" background="#ecf9ff" mode="closeable"
             left-icon="volume-o"
-            text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
+            text="我们不生产bug，我们只是bug的搬运工"
     />
-    <goodsList title="图片标题"  type="navImg"/>
-    <goodsList title="商品标题"  type="goods"/>
+    <div class="seckill-img">
+      <img src="http://ftp.52jdk.com/home-1.jpg" @click="onImgClick" alt="">
+    </div>
+    <goodsList title="推荐商品"  type="goods"/>
   </div>
 </template>
 
@@ -23,8 +25,9 @@
   import navLink from '../components/navLink'
   import goodsList from '../components/goods/list'
   import Vue from 'vue';
+  import { Toast } from 'vant';
   import { NoticeBar } from 'vant';
-
+  Vue.use(Toast);
   Vue.use(NoticeBar);
 export default {
   name: 'Home',
@@ -48,17 +51,26 @@ export default {
 
   },
   methods: {
-
-
+    onImgClick(){
+      Toast('coding... 请选择其他商品');
+    }
   }
 }
 </script>
 <style lang="less" scoped>
   .banner-img{
-    margin: 10px;
-    height: 96px;
+    //margin: 10px;
+    //height: 96px;
     border-radius: 10px;
+    background: #F5F5F5 !important;
     /*overflow: hidden;*/
+    img{
+      width: 100%;
+      height:100%;
+    }
+  }
+  .seckill-img{
+    margin-top: 10px;
     img{
       width: 100%;
       height:100%;

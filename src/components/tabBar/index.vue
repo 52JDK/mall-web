@@ -1,7 +1,7 @@
 <template>
-  <van-tabbar v-model="active"   active-color="red" placeholder safe-area-inset-bottom fixed route >
+  <van-tabbar v-model="active"   active-color="#1989fa" style="z-index: 1999; position: fixed " placeholder safe-area-inset-bottom fixed route >
     <van-tabbar-item  icon="shop-o"  to="/home" >首页</van-tabbar-item>
-    <van-tabbar-item icon="apps-o">分类</van-tabbar-item>
+    <van-tabbar-item icon="apps-o" to="/category">分类</van-tabbar-item>
     <van-tabbar-item to="/cart" icon="shopping-cart-o">购物车</van-tabbar-item>
     <van-tabbar-item icon="friends-o" to="/user">我</van-tabbar-item>
   </van-tabbar>
@@ -13,7 +13,6 @@
     Vue.use(Tabbar);
     Vue.use(TabbarItem);
   import Item from './item.vue'
-    import { Notify } from 'vant';
   export default {
     components: {
       Item

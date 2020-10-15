@@ -1,7 +1,7 @@
 <template>
     <div class="person-center">
 
-        <div class="my-head">
+        <div class="my-head" v-if="nickname!=null">
             <div class="head-img">
                 <img width="50px" height="50px" alt="" :src="headImg"/>
                 <label>{{nickname}}</label>
@@ -22,7 +22,7 @@
         </div>
         <div class="my-order">
             <div class="my-order-cell">
-                <van-cell title="我的订单" value="查看全部订单" is-link title-class="my-order-list" size="16px"/>
+                <van-cell title="我的订单" value="查看全部订单" @click=""  is-link to="/order/orderList" title-class="my-order-list" size="16px"/>
             </div>
             <div>
                 <van-grid :border="false" icon-size="22px" :column-num="5">
@@ -82,8 +82,8 @@
                 received: '',
                 headImg: '',
                 images: [
-                    'https://haitao.nosdn2.127.net/ThUbIr9WnE7TbTwTapp-kvAiT1809190053_960_480.jpg',
-                    'https://haitao.nos.netease.com/f3kJUUtkrDbsiU1LtopkHcBGgT1809182243_960_480.jpg',
+                    'http://ftp.52jdk.com/banner-1.jpg',
+                    'http://ftp.52jdk.com/banner-2.jpg',
                 ],
             };
         },
@@ -112,8 +112,11 @@
 
                 })
             },
-
         },
+      goOrderList(){
+        this.$router.push({path:'/order/orderList'})
+
+      },
     }
 
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <div class="navLink-class">
     <div :class='(buttonList.type == "2" ? "cap-image-ad__image-nav" : "cap-image-ad__slide cap-image-ad__text-nav nav-link")'
          :style='"overflow-x:hidden; background-color:"+buttonList.backgroundcolor'>
         <div  v-for="(item,index)  in buttonList" :key="index"
@@ -11,6 +12,7 @@
             </router-link>
         </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -42,5 +44,8 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+    .navLink-class{
+      background: #FFFFFF;
     }
 </style>

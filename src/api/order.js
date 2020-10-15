@@ -15,15 +15,21 @@ export function createOrder(data) {
         url: '/order/createOrder',
         method: 'post',
         data:{
-            data
+            addressId: data.addressId,
+            couponId: data.couponId,
+            remark: data.remark,
+            payAmount: data.payAmount,
         }
     })
 }
 
-export function orderPay() {
+export function orderPay(orderCode) {
     return request({
         url: '/order/orderPay',
         method: 'post',
+        data:{
+            orderCode:orderCode
+        }
     })
 }
 

@@ -64,12 +64,6 @@
                 vantLoading:false,
                 loading:true,
                 list:[
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg",
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg" ,
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg",
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg" ,
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg",
-                   "http://lppzcup.oss-cn-shanghai.aliyuncs.com//8b7dbc096bb045029ed42f33dace966e.jpg"
                 ],
                 goodsList:[],
                 finished:false
@@ -84,6 +78,9 @@
             type:{
                 type:String,
                 default:'navImg'
+            },
+            optionId:{
+
             }
         },
         created: function () {
@@ -98,10 +95,12 @@
         },
         methods: {
             getGoodsList(){
-                let { pageSize,pageNum } = this;
+                let { pageSize,pageNum,optionId } = this;
                 let params = {
                     pageSize,
-                    pageNum
+                    pageNum,
+                    optionId
+
                 }
                 goodsListApi(params).then(res=>{
                    if(res.code=='0000'){
@@ -180,6 +179,7 @@
         justify-content: space-between;
          flex-wrap: wrap;
     }
+
     .goods-item{
         width: 170px;
         height: 255px;
