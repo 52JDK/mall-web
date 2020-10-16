@@ -8,7 +8,7 @@
         v-for="(image, index) in whellList"
         :key="index"
       >
-        <a :href="image.url" v-if="image.type == '1'">
+        <a  v-if="image.type == '1'" @click="onclickImg(index)">
           <img  style="width: 100%;" :src="image.url" />
         </a>
       </van-swipe-item>
@@ -17,6 +17,7 @@
 </template>
 <script>
      import { swiperList } from '../../api'
+     import {Toast} from "vant";
 export default {
   data() {
     return {
@@ -41,7 +42,10 @@ export default {
                     that.height = Math.ceil(img.height / img.width * width);
                 }
           })
-      }
+      },
+    onclickImg(index){
+      Toast('这是banner ' + index + ' 哦');
+    }
   },
   created(){
     this.getSwiperList();
