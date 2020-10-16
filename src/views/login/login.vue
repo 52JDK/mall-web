@@ -65,7 +65,6 @@ export default {
       }
       pwdLogin(data).then(res => {
         if (res.code == "0000") {
-            console.log(res)
           this.userToken = 'Bearer ' + res.data;
           // 将用户token保存到vuex中
           this.changeLogin({ Authorization: this.userToken });

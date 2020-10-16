@@ -210,7 +210,6 @@ export default {
     onChange(index) {
       this.showList = false;
       this.chosenCoupon = index;
-      console.log(this.coupons[index])
       let data = {
         addressId: this.addressId,
         couponId: this.coupons[index].couponId
@@ -240,7 +239,6 @@ export default {
       };
 
       createOrder(data).then(res => {
-        console.log(data)
         if (res.code == '0000') {
           orderPay(res.data).then(ress => {
             this.payUrl = ress.data;
@@ -254,7 +252,6 @@ export default {
 
     orderSure(routerParams, choseCoupon) {
       orderSure(routerParams).then(res => {
-        console.log(res.data)
         this.name = res.data.name;
         this.phone = res.data.phone;
         this.address = res.data.addressDetail;

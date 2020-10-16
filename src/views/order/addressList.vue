@@ -70,7 +70,6 @@
             getListParams() {
                 // 取到路由带过来的参数
                 let routerParams = this.$route.query;
-                console.log(routerParams);
                 this.chosenAddressId = routerParams.id;
             }
         },

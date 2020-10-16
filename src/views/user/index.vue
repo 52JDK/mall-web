@@ -108,8 +108,6 @@
                     if (res.data.data.pay > 0) {
                         this.pay = res.data.data.pay;
                     }
-                    console.log(res.data.data);
-
                 })
             },
         },

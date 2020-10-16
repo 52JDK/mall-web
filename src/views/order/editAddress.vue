@@ -94,7 +94,6 @@
                 // 取到路由带过来的参数
                 let routerParams = this.$route.query;
                 this.addressInfo.id = routerParams.id;
-                console.log(routerParams.id)
                 findAddressById(routerParams.id).then(res => {
                     if (res.code == "0000") {
                         this.addressInfo = res.data

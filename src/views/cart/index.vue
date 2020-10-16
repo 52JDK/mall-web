@@ -74,7 +74,6 @@ export default {
     findCart().then(res => {
       let array = [];
       this.list = res.data.cartEntries;
-      console.log(this.list)
       for (let i in this.list) {
         if (this.list[i].checked) {
           array.push(this.list[i].sku);
@@ -150,7 +149,6 @@ export default {
             num_init = that.list.length
           }
         }
-        console.log("提交订单" + this.list.length)
         if (this.list.length != 0) {
           this.check = res.data.selectAll;
           this.total = res.data.total * 100;

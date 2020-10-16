@@ -12,7 +12,7 @@
 
         <div class="grid-text" v-for="(item,index) in speciesOptions" :key="index">
 
-          <van-grid-item :to="{name:'categoryList',params:{optionId:item.id,title:item.name}}">
+          <van-grid-item :to="{name:'categoryList',params:{optionId:item.id,title:item.name}}" >
             <van-image :src="item.cateImg" width="50px" height="50px"/>
           </van-grid-item>
           <div class="grid-text-a">
@@ -54,21 +54,19 @@ export default {
   methods: {
     onChange(index) {
       Notify({type: 'primary', message: index});
-      console.log(index)
     },
     click(index) {
-      console.log("1111" + index);
       this.id=index;
       this.categoryList();
     },
     categoryList() {
-      console.log("id:"+this.id)
       categoryList(this.id).then(res => {
         this.speciesList = res.data.speciesList;
         this.speciesOptions = res.data.speciesOptions;
-        console.log(res.data)
       })
     },
+    chooseList(){
+    }
   },
 };
 </script>

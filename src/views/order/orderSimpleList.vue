@@ -117,7 +117,6 @@ export default {
             }
             if (list.length < this.pageSize) {
               this.orderList = list;
-              console.log("1111111111111111"+JSON.stringify(this.orderList))
               this.finished = true;
               return;
             } else {

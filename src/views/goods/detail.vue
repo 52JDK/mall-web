@@ -199,7 +199,6 @@ export default {
     getGoodsRule() {
       let {productId} = this;
       goodsRule(productId).then(res => {
-        console.log(res.data);
         // this.goodsDetail = res.data;
         this.sku.tree = res.data.tree;
         this.sku.list = res.data.list;
@@ -241,7 +240,6 @@ export default {
       let {productId} = this;
       goodsDetail(productId).then(res => {
         if (res.code == "0000") {
-          console.log(res.data);
           this.goodsDetail = res.data;
           if (typeof this.goodsDetail.marketPrice == 'undefined') {
             this.goodsDetail.marketPrice = res.data.price / 0.8
