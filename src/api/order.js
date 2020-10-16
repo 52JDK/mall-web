@@ -1,11 +1,12 @@
 import request from "@/utils/request"
 
-export function orderSure(id) {
+export function orderSure(routerParams) {
     return request({
         url: '/order/orderSure',
         method: 'post',
         data:{
-            id:id
+            id:routerParams.id,
+            couponId:routerParams.couponId
         }
     })
 }

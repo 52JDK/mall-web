@@ -85,7 +85,7 @@
             -￥{{ point }}
           </van-cell>
           <van-cell title="优惠券" :border="false">
-            -￥{{ point }}
+            -￥{{ couponDiscount }}
           </van-cell>
           <van-cell title="运费" :border="false">
             ￥{{ freight }}
@@ -117,7 +117,7 @@
                       @submit="createOrder()">
         <div class="bottom-price">
           <span> 应付：</span>
-          <span style="font-size: 16px;font-weight: bolder">￥{{ totalAmount }}</span>
+          <span style="font-size: 16px;font-weight: bolder">￥{{ payAmount }}</span>
         </div>
 
       </van-submit-bar>
@@ -192,14 +192,14 @@ export default {
       totalNum: 0,
       coupons: [],
       disabledCoupons: [],
-      banners: [
-      ],
+      banners: [],
+      couponDiscount:0,
     }
   },
 
   mounted() {
     let routerParams = this.$route.query;
-    this.orderSure(routerParams);
+    this.orderSure(routerParams, false);
     this.getOrderParams();
 
   },
@@ -210,6 +210,12 @@ export default {
     onChange(index) {
       this.showList = false;
       this.chosenCoupon = index;
+      console.log(this.coupons[index])
+      let data = {
+        addressId: this.addressId,
+        couponId: this.coupons[index].couponId
+      }
+      this.orderSure(data, true);
     },
     onExchange(code) {
       this.coupons.push(coupon);
@@ -246,8 +252,8 @@ export default {
       })
     },
 
-    orderSure(routerParams) {
-      orderSure(routerParams.id).then(res => {
+    orderSure(routerParams, choseCoupon) {
+      orderSure(routerParams).then(res => {
         console.log(res.data)
         this.name = res.data.name;
         this.phone = res.data.phone;
@@ -256,15 +262,19 @@ export default {
         this.totalAmount = res.data.cartResponse.total;
         this.banners = res.data.cartResponse.cartEntries;
         this.totalNum = res.data.cartResponse.totalNum;
-        // this.coupons = res.data.userCoupon.sureCoupon;
-        // this.disabledCoupons = res.data.userCoupon.notUserCoupon;
+        if (!choseCoupon) {
+          this.coupons = res.data.userCoupon.sureCoupon;
+          this.disabledCoupons = res.data.userCoupon.notUserCoupon;
+        }
+
         this.point = res.data.point;
         this.freight = res.data.freight;
         this.payAmount = res.data.payAmount;
+        this.couponDiscount=res.data.couponDiscount
       });
     },
     paySuccess() {
-      this.$router.push({path:'/order/orderList'})
+      this.$router.push({path: '/order/orderList'})
 
     },
     getOrderParams() {

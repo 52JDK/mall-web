@@ -19,7 +19,7 @@
         </div>
         <div class="old-price">
           <span>原价￥{{ goodsDetail.marketPrice }}</span>
-          <span class="tag">6折</span>
+          <span class="tag">8折</span>
         </div>
       </div>
       <div class="info-right">
@@ -54,7 +54,7 @@
       </div>
       <div class="params">
         <div class="div1">参数</div>
-        <div class="div2">品牌 {{goodsDetail.brand}}</div>
+        <div class="div2">品牌 {{ goodsDetail.brand }}</div>
         <van-icon name="arrow"/>
       </div>
     </div>
@@ -70,7 +70,7 @@
       <div class="after"></div>
       商品评价
     </div>
-    <div v-for="(item,index) in access" :key="index" class="access" >
+    <div v-for="(item,index) in access" :key="index" class="access">
       <div class="access-user">
         <div class="access-head">
           <img
@@ -81,21 +81,21 @@
           />
         </div>
         <div class="access-name">
-          <span>{{item.nickName}}</span>
+          <span>{{ item.nickName }}</span>
           <van-rate v-model="item.branch" size="10px"/>
         </div>
       </div>
       <div class="access-text">
-        <span style="font-size: 14px">{{item.text}}</span>
+        <span style="font-size: 14px">{{ item.text }}</span>
       </div>
-      <div class="access-img" >
-      <img
-          width="80px"
-          height="80px"
-          :src="item.img"
-          style="margin-right: 5px"
-          v-for="(item,index) in item.accessImg"
-      />
+      <div class="access-img">
+        <img
+            width="80px"
+            height="80px"
+            :src="item.img"
+            style="margin-right: 5px"
+            v-for="(item,index) in item.accessImg"
+        />
       </div>
     </div>
     <div class="goods-title">
@@ -125,7 +125,7 @@ import {addCart} from "../../api/cart";
 import {Lazyload} from 'vant';
 import Vue from 'vue';
 import {Rate} from 'vant';
-import { Toast } from 'vant';
+import {Toast} from 'vant';
 
 Vue.use(Toast);
 Vue.use(Rate);
@@ -135,44 +135,41 @@ export default {
   data() {
     return {
       images: [],
-      access:[
+      access: [
         {
-          headImg:"http://ftp.52jdk.com/head.png",
-          nickName:'因为太帅被罚5块',
-          branch:5,
-          text:"东西很nice，我很喜欢，女友60大寿送的",
-          accessImg:[
+          headImg: "http://ftp.52jdk.com/head.png",
+          nickName: '因为太帅被罚5块',
+          branch: 5,
+          text: "东西很nice，我很喜欢，女友60大寿送的",
+          accessImg: [
             {
-              img:'http://ftp.52jdk.com/access-1.jpg'
+              img: 'http://ftp.52jdk.com/access-1.jpg'
             },
             {
-              img:'http://ftp.52jdk.com/access-2.jpg'
+              img: 'http://ftp.52jdk.com/access-2.jpg'
             }
           ],
         },
         {
-          headImg:"http://ftp.52jdk.com/head.png",
-          nickName:'装逼过头你不遭雷劈吗',
-          branch:5,
-          text:"还行，也就一顿早餐的钱",
+          headImg: "http://ftp.52jdk.com/head.png",
+          nickName: '装逼过头你不遭雷劈吗',
+          branch: 5,
+          text: "还行，也就一顿早餐的钱",
         }
       ],
       detailImg: [],
       value: 5,
       goodsDetail: {
         pictureUrl: "",
-        marketPrice: ""
+        marketPrice: 0
       },
       showBase: false,
       // sku:{},
       sku: {
         // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
         // 可以理解为一个商品可以有多个规格类目，一个规格类目下可以有多个规格值。
-        tree: [
-
-        ],
-        list: [
-        ],
+        tree: [],
+        list: [],
         price: 0,
         stock_num: 0,
         none_sku: false,
@@ -188,9 +185,9 @@ export default {
   created() {
     const {id} = this.$route.params;
     this.productId = id;
-    if(typeof(id) =='undefined'){
+    if (typeof (id) == 'undefined') {
       this.productId = JSON.parse(localStorage.getItem("productId"));
-    }else{
+    } else {
       let obj = JSON.stringify(id); //转化为JSON字符串
       localStorage.setItem("productId", obj); //数据存storage，防止刷新丢失
     }
@@ -220,10 +217,10 @@ export default {
 
     onBuyClicked(data) {
       addCart(data).then(res => {
-        if(res.code=="0000"){
+        if (res.code == "0000") {
           this.$router.push('/cart');
           this.showBase = false;
-        }else{
+        } else {
           Toast.fail('失败');
         }
       });
@@ -232,9 +229,9 @@ export default {
     onAddCartClicked(data) {
       let {} = this;
       addCart(data).then(res => {
-        if(res.code=="0000"){
+        if (res.code == "0000") {
           Toast.success("添加成功");
-        }else{
+        } else {
           Toast.fail('添加失败');
         }
       });
@@ -246,11 +243,14 @@ export default {
         if (res.code == "0000") {
           console.log(res.data);
           this.goodsDetail = res.data;
+          if (typeof this.goodsDetail.marketPrice == 'undefined') {
+            this.goodsDetail.marketPrice = res.data.price / 0.8
+          }
           this.images = res.data.productImg.rollImg.split(",")
           this.detailImg = res.data.productImg.detailImg.split(",")
-          this.goods.picture= res.data.productImg.rollImg.split(",")[0];
+          this.goods.picture = res.data.productImg.rollImg.split(",")[0];
 
-        }else{
+        } else {
         }
       });
     }
@@ -308,13 +308,14 @@ export default {
         line-height: 20px;
         margin-left: 12px;
       }
-    }pn
+    }
 
+    pn
     .price {
       margin: 8px 0 8px 10px;
 
       span:nth-child(2) {
-        font-size: 25px;
+        font-size: 30px !important;
         font-weight: bold;
       }
     }
@@ -493,15 +494,21 @@ export default {
 }
 
 .access-text {
-  margin-top:12px;
+  margin-top: 12px;
   margin-left: 10px;
 }
-.access-img{
+
+.price {
+  font-size: 25px;
+}
+
+.access-img {
   margin-top: 10px;
   margin-left: 10px;
 }
-.access{
-  border-bottom:2px solid #fff;
+
+.access {
+  border-bottom: 2px solid #fff;
   margin-top: 3px;
 }
 
