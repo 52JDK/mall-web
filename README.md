@@ -2,7 +2,7 @@
 小R商城 h5 前端项目，基于Vue+Vant实现的，主要包括首页，分类，购物车，下单，优惠券，目前商品的加购下单及微信的支付已经打通，有问题可以访问主页咨询我哦
 
 [![image](https://img.shields.io/badge/QQ%E7%BE%A4-446227807-green)](http://qm.qq.com/cgi-bin/qm/qr?k=V8ZVep1J7__ZtMKrtVIAyyd16t4A_-NF&authKey=zIwYl0p5Xtaz%2FuRv9VYXcdmLkFwrJydeTL1iLzhBj9qKMqvTSpeJj8Yhb8eXqxJb&noverify=0&group_code=446227807)
-[![image](https://img.shields.io/badge/%E5%B0%8FR-%E5%8D%9A%E5%AE%A2-orange)](http://52jdk.com)
+[![image](https://img.shields.io/badge/%E5%B0%8FR-%E5%8D%9A%E5%AE%A2-orange)](http://www.52jdk.com)
 [![image](https://img.shields.io/badge/CSDN-%E7%A8%8B%E5%BA%8F%E5%91%98%E5%B0%8FR-red)](https://blog.csdn.net/robot_sh)
 
 ### 项目预览
